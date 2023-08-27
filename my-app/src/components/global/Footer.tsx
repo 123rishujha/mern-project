@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="text-center bg-light py-4">
+    <div className="text-center bg-light py-4 mt-5">
       <h6>Welcome my chanel DevAT-VietNam</h6>
       <a
         href="https://www.youtube.com/c/DevATHTML"
