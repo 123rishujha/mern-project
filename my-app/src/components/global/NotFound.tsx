@@ -8,7 +8,7 @@ const NotFound = () => {
     >
       <h2
         className="position-absolute text-secondary"
-        style={{ top: "50%", left: "50%", transform: "tranlate(-50%,-50%)" }}
+        style={{ top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}
       >
         404 | NotFound
       </h2>
