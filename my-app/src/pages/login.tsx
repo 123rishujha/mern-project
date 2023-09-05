@@ -9,7 +9,7 @@ const Login = () => {
     <div className="auth_page">
       <div className="auth_box">
         <h3 className="text-uppercase text-center mb-4">Login</h3>
-        {sms ? <LoginSMS /> : <LoginPass /> } 
+        {sms ? <LoginSMS /> : <LoginPass />}
 
         <small className="row my-2 text-primary" style={{ cursor: "pointer" }}>
           <span className="col-6">
