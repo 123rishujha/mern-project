@@ -5,7 +5,6 @@ import Header from "./components/global/Header";
 import Footer from "./components/global/Footer";
 import Alert from "./components/alert/Alert";
 
-
 function App() {
   return (
     <div>
