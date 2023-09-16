@@ -1,11 +1,25 @@
-import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import LoginPass from "../components/auth/LoginPass";
+import LoginSMS from "../components/auth/LoginSMS";
+import RegisterForm from "../components/auth/RegisterForm";
 
-const Register = () => {
+const Login = () => {
+  const [sms, setSms] = useState(false);
   return (
-    <div>
-      <h2>Register Page</h2>
+    <div className="auth_page">
+      <div className="auth_box">
+        <h3 className="text-uppercase text-center mb-4">Register</h3>
+        <RegisterForm />
+        <p>
+          {`Already have an account `}
+          <Link to={`/login`} style={{ color: "crimson" }}>
+            Login Now
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
 
-export default Register;
+export default Login;
