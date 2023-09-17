@@ -15,6 +15,7 @@ const generatePage = (name: string) => {
 
 const PageRender = () => {
   const { page, slug }: IParams = useParams();
+  console.log("page", page, "slug", slug);
   let name = "";
   if (page) {
     name = slug ? `${page}/[slug]` : `${page}`;
