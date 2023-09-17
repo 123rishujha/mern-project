@@ -55,18 +55,23 @@ const authCtrl = {
       if (!newUser)
         return res.status(400).json({ msg: "Invalid authentication" });
 
-      const user = new Users(newUser);
-      await user.save();
+      const user = await Users.findOne({ account: newUser?.account });
+      if (user) return res.status(400).json({ msg: "Account already exist" });
+
+      const new_user = new Users(newUser);
+
+      await new_user.save();
       res.json({ msg: "Account has been Activated!" });
     } catch (err: any) {
-      let errMsg;
-      if (err.code === 11000) {
-        errMsg = Object.keys(err.keyValue)[0] + " already exist.";
-      } else {
-        console.log(err);
-        errMsg = err?.message;
-      }
-      return res.status(500).json({ msg: errMsg });
+      // let errMsg;
+      // if (err.code === 11000) {
+      //   errMsg = Object.keys(err.keyValue)[0] + " already exist.";
+      // } else {
+      //   console.log(err);
+      //   errMsg = err?.message;
+      // }
+      // return res.status(500).json({ msg: errMsg });
+      return res.status(500).json({ msg: err.message });
     }
   },
   login: async (req: Request, res: Response) => {

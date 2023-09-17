@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import LoginPass from "../components/auth/LoginPass";
-import LoginSMS from "../components/auth/LoginSMS";
 import RegisterForm from "../components/auth/RegisterForm";
 
 const Login = () => {
-  const [sms, setSms] = useState(false);
   return (
     <div className="auth_page">
       <div className="auth_box">
