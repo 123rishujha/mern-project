@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import RegisterForm from "../components/auth/RegisterForm";
 
@@ -10,7 +9,7 @@ const Login = () => {
         <RegisterForm />
         <p>
           {`Already have an account `}
-          <Link to={`/login`} style={{ color: "crimson" }}>
+          <Link to={`/login`} style={{ color: "crimson", marginTop: "10px" }}>
             Login Now
           </Link>
         </p>

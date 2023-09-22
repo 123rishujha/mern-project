@@ -96,19 +96,21 @@ const authCtrl = {
   },
   refreshToken: async (req: Request, res: Response) => {
     try {
-      const rf_token = req.cookies.refreshtoken;
+      const rf_token = req?.cookies?.refreshtoken;
+      // console.log("cookie", req.cookies.refreshtoken);
       if (!rf_token) return res.status(500).json({ msg: "Please Login now!" });
       const decoded = <IDecodedToken>(
         jwt.verify(rf_token, `${process.env.REFRESH_TOKEN_SECRET}`)
       );
       if (!decoded.id)
+        // return res.status(500).json({ msg: "Please Login now!" };
         return res.status(500).json({ msg: "Please Login now!" });
 
       const user = await Users.findById(decoded.id).select("-password");
       if (!user)
         return res.status(400).json({ msg: "This account does not exist." });
       const access_token = generateAccessToken({ id: user.id });
-      res.json({ access_token });
+      res.json({ access_token, user });
     } catch (err: any) {
       console.log("logout error", err);
       return res.status(500).json({ msg: err.message });
