@@ -11,9 +11,9 @@ const app = express();
 // app.use(cors());
 app.use(
   cors({
-    origin: `https://67729n-3000.csb.app`,
+    origin: `${process.env.BASE_URL}`,
     credentials: true,
-  }),
+  })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
