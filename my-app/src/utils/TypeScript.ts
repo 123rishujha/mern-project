@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent } from "react";
-import rootReducer from "../redux/reducers/index"
+import rootReducer from "../redux/reducers/index";
 
 export type InputChange = ChangeEvent<HTMLInputElement>;
 export type FormSubmit = FormEvent<HTMLFormElement>;
-export type RootStore = ReturnType<typeof rootReducer>
+export type RootStore = ReturnType<typeof rootReducer>;
 
 export interface IParams {
   page: string;
@@ -28,6 +28,10 @@ export interface IUser extends IUserLogin {
   _id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IUserProfile extends IUserRegister {
+  avatar: string | File;
 }
 
 export interface IAlert {
