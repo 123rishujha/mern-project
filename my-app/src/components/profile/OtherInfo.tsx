@@ -7,3 +7,4 @@ const OtherInfo = () => {
 }
 
 export default OtherInfo
+// modified

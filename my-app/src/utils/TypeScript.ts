@@ -39,3 +39,4 @@ export interface IAlert {
   success?: string | string[];
   errors?: string | string[];
 }
+// modified
