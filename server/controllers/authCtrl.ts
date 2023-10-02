@@ -147,7 +147,7 @@ const authCtrl = {
           account: email,
           password: passwordHash,
           avatar: picture,
-          type: "login",
+          type: "google",
         };
         registerUser(user, res);
       }
@@ -162,7 +162,13 @@ const loginUser = async (user: IUser, password: string, res: Response) => {
   try {
     const isMatch = await bcrypt.compare(password, user.password);
     console.log("ismatch", isMatch);
-    if (!isMatch) return res.status(400).json({ msg: "incorrect password" });
+    if (!isMatch) {
+      let msgError =
+        user.type === "register"
+          ? "Password is incorrect."
+          : `Password is incorrect. This account login with ${user.type}`;
+      return res.status(400).json({ msg: msgError });
+    }
     const access_token = generateAccessToken({ id: user._id });
     const refresh_token = generateRefreshToken({ id: user._id });
 
