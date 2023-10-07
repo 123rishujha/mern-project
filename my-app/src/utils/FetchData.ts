@@ -1,6 +1,5 @@
 import axios from "axios";
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
-console.log("env", backendUrl);
 
 export const postAPI = async (url: string, post: object, token?: string) => {
   const res = await axios.post(`${backendUrl}/api/${url}`, post, {
@@ -18,6 +17,13 @@ export const getAPI = async (url: string, token?: string) => {
     headers: {
       Authorization: token,
     },
+  });
+  return res;
+};
+
+export const patchAPI = async (url: string, post: object, token?: string) => {
+  const res = await axios.patch(`${backendUrl}/api/${url}`, post, {
+    headers: { Authorization: token },
   });
   return res;
 };
