@@ -6,12 +6,14 @@ import Footer from "./components/global/Footer";
 import { Alert } from "./components/alert/Alert";
 
 import { refreshToken } from "./redux/actions/authAction";
+import { getCategories } from "./redux/actions/categoryAction";
 import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(refreshToken());
+    dispatch(getCategories());
   }, [dispatch]);
   return (
     <div>
