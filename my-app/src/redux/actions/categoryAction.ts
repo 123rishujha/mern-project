@@ -1,12 +1,15 @@
 import { Dispatch } from "react";
 import { ALERT, IAlertType } from "../types/alertType";
+import { postAPI, getAPI, patchAPI, deleteAPI } from "../../utils/FetchData";
+
 import {
+  ICategoryType,
   CREATE_CATEGORY,
   GET_CATEGORIES,
-  ICategoryType,
+  UPDATE_CATEGORY,
+  DELETE_CATEGORY,
 } from "../types/categoryType";
-
-import { postAPI, getAPI } from "../../utils/FetchData";
+import { ICategory } from "../../utils/TypeScript";
 
 export const createCategory =
   (name: string, token: string) =>
@@ -30,6 +33,32 @@ export const getCategories =
         type: GET_CATEGORIES,
         payload: res?.data?.categories,
       });
+      dispatch({ type: ALERT, payload: { loading: false } });
+    } catch (err: any) {
+      dispatch({ type: ALERT, payload: { errors: err.response?.data?.msg } });
+    }
+  };
+
+export const updateCategory =
+  (data: ICategory, token: string) =>
+  async (dispatch: Dispatch<IAlertType | ICategoryType>) => {
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      await patchAPI(`category/${data._id}`, { name: data?.name }, token);
+      dispatch({ type: UPDATE_CATEGORY, payload: data });
+      dispatch({ type: ALERT, payload: { loading: false } });
+    } catch (err: any) {
+      dispatch({ type: ALERT, payload: { errors: err.response?.data?.msg } });
+    }
+  };
+
+export const deleteCategory =
+  (id: string, token: string) =>
+  async (dispatch: Dispatch<IAlertType | ICategoryType>) => {
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      await deleteAPI(`category/${id}`, token);
+      dispatch({ type: DELETE_CATEGORY, payload: id });
       dispatch({ type: ALERT, payload: { loading: false } });
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response?.data?.msg } });
