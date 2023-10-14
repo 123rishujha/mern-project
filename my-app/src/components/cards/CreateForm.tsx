@@ -66,7 +66,12 @@ const CreateForm: React.FC<IProps> = ({ blog, setBlog }) => {
       </div>
 
       <div className="form-group my-3">
-        <select className="form-control text-capitalize">
+        <select
+          className="form-control text-capitalize"
+          name='category'
+          value={blog.category} 
+          onChange={handleChangeInput}
+        >
           <option value="">Choose a category</option>
           {categories.map((category) => (
             <option key={category._id} value={category._id}>

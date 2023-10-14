@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootStore, IBlog } from "../utils/TypeScript";
+import { validCreateBlog } from "../utils/Valid";
+import { imageUpload } from "../utils/ImageUpload";
 
 import NotFound from "../components/global/NotFound";
 import CreateForm from "../components/cards/CreateForm";
 import CardHoriz from "../components/cards/CardHoriz";
 import ReactQuill from "../components/editor/ReactQuill";
+import { ALERT } from "../redux/types/alertType";
+import { createBlog } from "../redux/actions/blogAction";
 
 const CreateBlog = () => {
   const initState = {
@@ -20,9 +24,27 @@ const CreateBlog = () => {
 
   const [blog, setBlog] = useState<IBlog>(initState);
   const [body, setBody] = useState("");
-  const { auth, categories } = useSelector((state: RootStore) => state);
-
+  const divRef = useRef<HTMLDivElement>(null);
+  const [text, setText] = useState("");
+  const { auth } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const div = divRef.current;
+    if (!div) return;
+    const text = div?.innerText as string;
+    setText(text);
+  }, [body]);
+
+  const handleSubmit = async () => {
+    if (!auth?.access_token) return;
+    const check = validCreateBlog({ ...blog, content: text });
+    if (check.errLength !== 0) {
+      return dispatch({ type: ALERT, payload: { errors: check.errMsg } });
+    }
+    let newData = { ...blog, content: body };
+    dispatch(createBlog(newData, auth?.access_token));
+  };
 
   if (!auth?.access_token) return <NotFound />;
 
@@ -40,7 +62,22 @@ const CreateBlog = () => {
       </div>
 
       <ReactQuill setBody={setBody} />
-      <button className="btn btn-dark mt-3 d-block mx-auto">Create Post</button>
+
+      <div
+        ref={divRef}
+        dangerouslySetInnerHTML={{
+          __html: body,
+        }}
+        style={{ display: "done" }}
+      ></div>
+      <small>{text.length}</small>
+
+      <button
+        className="btn btn-dark mt-3 d-block mx-auto"
+        onClick={handleSubmit}
+      >
+        Create Post
+      </button>
     </div>
   );
 };
