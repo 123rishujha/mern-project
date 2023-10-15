@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: `${process.env.BASE_URL}`,
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,6 +25,7 @@ app.use(cookieParser());
 app.use("/api", routes.authRouter);
 app.use("/api", routes.userRouter);
 app.use("/api", routes.categoryRouter);
+app.use("/api", routes.blogRouter);
 
 //database
 import "./config/database";
