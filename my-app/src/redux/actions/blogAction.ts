@@ -1,8 +1,11 @@
 import { Dispatch } from "redux";
 import { IBlog } from "../../utils/TypeScript";
 import { imageUpload } from "../../utils/ImageUpload";
+import { postAPI, getAPI } from "../../utils/FetchData";
+
 import { ALERT, IAlertType } from "../types/alertType";
-import { postAPI } from "../../utils/FetchData";
+
+import { GET_HOME_BLOGS, IGetHomeBlogsType } from "../types/blogType";
 
 export const createBlog =
   (blog: IBlog, token: string) => async (dispatch: Dispatch<IAlertType>) => {
@@ -22,5 +25,19 @@ export const createBlog =
       dispatch({ type: ALERT, payload: { loading: false } });
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg } });
+    }
+  };
+
+export const getHomeBlogs =
+  () => async (dispatch: Dispatch<IAlertType | IGetHomeBlogsType>) => {
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res = await getAPI("home/blogs");
+      dispatch({
+        type: GET_HOME_BLOGS,
+        payload: res?.data,
+      });
+    } catch (err: any) {
+      dispatch({ type: ALERT, payload: { errors: err?.response?.data?.msg } });
     }
   };
