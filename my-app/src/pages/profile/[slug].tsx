@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <div className="row my-3" style={{ width: "100%", margin: "auto" }}>
       <div className="col-md-3">
-        {auth?.user?._id === slug ? <UserInfo /> : <OtherInfo />}
+        {auth?.user?._id === slug ? <UserInfo /> : <OtherInfo id={slug} />}
       </div>
       <div className="col-md-7">
         <UserBlogs />
