@@ -44,7 +44,10 @@ const categoryCtrl = {
     try {
       const { name } = req.body;
       const { id } = req.params;
-      const category = await Categories.findOneAndUpdate({ _id: id }, { name });
+      const category = await Categories.findOneAndUpdate(
+        { _id: id },
+        { name: name.toLowerCase() },
+      );
       res.json({ msg: "Updated SuccessFully!" });
     } catch (err: any) {
       res.status(500).json({ msg: err.message });
