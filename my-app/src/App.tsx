@@ -13,9 +13,9 @@ import { useDispatch } from "react-redux";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getHomeBlogs());
     dispatch(getCategories());
     dispatch(refreshToken());
+    dispatch(getHomeBlogs());
   }, [dispatch]);
   return (
     <div>
