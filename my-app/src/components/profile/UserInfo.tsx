@@ -10,7 +10,7 @@ import {
   FormSubmit,
 } from "../../utils/TypeScript";
 
-import { updateUser, resetPassword } from "../../redux/actions/profileAction";
+import { updateUser, resetPassword } from "../../redux/actions/userAction";
 
 const UserInfo = () => {
   const initalState = {
