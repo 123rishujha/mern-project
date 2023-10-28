@@ -14,7 +14,10 @@ const Login = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (auth?.access_token) history.push("/");
+    if (auth.access_token) {
+      let url = history.location.search.replace("?", "/");
+      return history.push(url);
+    }
   }, [auth?.access_token, history]);
 
   return (
@@ -34,7 +37,7 @@ const Login = () => {
         </small>
         <p>
           {`You don't have an account? `}
-          <Link to={`/register`} style={{ color: "crimson" }}>
+          <Link to={`/register${history.location.search}`} style={{ color: "crimson" }}>
             Register Now
           </Link>
         </p>
