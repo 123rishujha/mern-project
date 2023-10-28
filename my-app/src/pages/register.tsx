@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import RegisterForm from "../components/auth/RegisterForm";
 
 const Login = () => {
+  const history = useHistory();
   return (
     <div className="auth_page">
       <div className="auth_box">
@@ -9,7 +10,10 @@ const Login = () => {
         <RegisterForm />
         <p>
           {`Already have an account `}
-          <Link to={`/login`} style={{ color: "crimson", marginTop: "10px" }}>
+          <Link
+            to={`/login${history.location.search}`}
+            style={{ color: "crimson", marginTop: "10px" }}
+          >
             Login Now
           </Link>
         </p>
