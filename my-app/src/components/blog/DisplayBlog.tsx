@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IBlog, RootStore, IUser, IComment } from "../../utils/TypeScript";
 import Input from "../comments/Input";
 import Comments from "../comments/Comments";
-import { createComment } from "../../redux/actions/commentAction";
+import { createComment, getComments } from "../../redux/actions/commentAction";
+import Loading from "../global/Loading";
 
 interface IProps {
   blog: IBlog;
@@ -13,7 +14,7 @@ interface IProps {
 const DisplayBlog: React.FC<IProps> = ({ blog }) => {
   const { auth, comments } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState<IComment[]>([]);
 
   const handleComment = (body: string) => {
@@ -30,9 +31,22 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
   };
 
   useEffect(() => {
-    if (comments.data.length === 0) return;
-    setShowComments(comments.data);
+    setShowComments(comments?.data || []);
   }, [comments.data]);
+
+  const fetchComments = useCallback(
+    async (id: string) => {
+      setLoading(true);
+      await dispatch(getComments(id));
+      setLoading(false);
+    },
+    [dispatch],
+  );
+
+  useEffect(() => {
+    if (!blog._id) return;
+    fetchComments(blog._id);
+  }, [blog._id, fetchComments]);
 
   return (
     <div>
@@ -69,9 +83,13 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
         </h5>
       )}
 
-      {showComments?.map((comment, index) => (
-        <Comments key={index} comment={comment} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        showComments?.map((comment, index) => (
+          <Comments key={index} comment={comment} />
+        ))
+      )}
     </div>
   );
 };
